@@ -1,0 +1,96 @@
+<div class="container col-md-8 jumbotron">    
+    <div class="body-content">
+            <div class="panel-heading">
+                <h3 class="panel-title">Student CRUD... <small>All information is required</small></h3>
+            </div>
+        <form [formGroup]="StudentForm" (ngSubmit)="CreateStudent()">
+            <div class="form-group" hidden="true">
+                <input type="text" class="form-control" formControlName="Id" id="Id" disabled="disabled"/>
+            </div>
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <input type="text" class="form-control date" formControlName="userName" id="userName" placeholder="User Name" required [ngClass]="{ 'is-invalid': submitted && f.userName.errors }"/>
+                        <div *ngIf="submitted && f.userName.errors" class="invalid-feedback">
+                                <div *ngIf="f.userName.errors.required">The field User Name is required</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <input type="text" class="form-control" formControlName="firstName" id="firstName" placeholder="First Name" required [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }" />
+                        <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
+                                <div *ngIf="f.firstName.errors.required">The field First name is required</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <input type="text" class="form-control" formControlName="lastName" id="lastName" placeholder="Last Name" required [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }" />
+                        <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
+                                <div *ngIf="f.lastName.errors.required">The field Last name is required</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <input type="number" class="form-control" formControlName="age" id="age" placeholder="Age" required [ngClass]="{ 'is-invalid': submitted && f.age.errors }" />
+                        <div *ngIf="submitted && f.age.errors" class="invalid-feedback">
+                                <div *ngIf="f.age.errors.required">The field Age is required</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <input type="text" class="form-control" formControlName="career" id="career" placeholder="Career" required [ngClass]="{ 'is-invalid': submitted && f.career.errors }" />
+                        <div *ngIf="submitted && f.career.errors" class="invalid-feedback">
+                                <div *ngIf="f.career.errors.required">The field Career is required</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <button *ngIf="!modify" type="submit" id="btnNew" class="btn btn-primary">New</button>
+                    <button *ngIf="modify" type="button" id="btnModify" (click)="ModifyStudent()" class="btn btn-danger">Modify</button>
+                    <button *ngIf="modify" type="button" id="btnClear" (click)="Clearform()" class="btn btn-success">Clear</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div>
+    <table id="tableShow" class="table table-hover custab">
+    <thead class="thead-light">
+        <tr> <input
+            type="text"
+            class="form-control"
+            name="searchString"
+            placeholder="Search for User name..."
+            [(ngModel)]="searchString"/>
+        </tr>
+        <tr>
+            <th>User Name</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Age</th>
+            <th>Career</th>
+            <th colspan="3">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+            <tr *ngFor="let student of students | filter : 'userName' : searchString; let i = index">
+                <td>{{student.userName}}</td>
+                <td>{{student.firstName}}</td>
+                <td>{{student.lastName}}</td>
+                <td>{{student.age}}</td>
+                <td>{{student.career}}</td>
+                <td style="padding: 0px;"><button class="btn" style="padding: 0px;" title="Modify Student" (click)="LoadStudent(student)"><i class="fa fa-pen"></i></button></td>
+                <td style="padding: 0px;"><button class="btn" style="padding: 0px;" title="Delete Student" (click)="DeleteStudent(student.id)"><i class="fa fa-trash"></i></button></td>                    
+            </tr>
+        </tbody>
+    </table>
+</div>
+
